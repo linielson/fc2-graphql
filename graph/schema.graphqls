@@ -39,7 +39,7 @@ input NewChapter {
 type Query {
     categories: [Category]
     courses: [Course]
-    chpaters: [Chapter]
+    chapters: [Chapter]
 }
 
 type Mutation {

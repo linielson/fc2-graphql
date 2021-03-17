@@ -72,7 +72,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Categories func(childComplexity int) int
-		Chpaters   func(childComplexity int) int
+		Chapters   func(childComplexity int) int
 		Courses    func(childComplexity int) int
 	}
 }
@@ -85,7 +85,7 @@ type MutationResolver interface {
 type QueryResolver interface {
 	Categories(ctx context.Context) ([]*model.Category, error)
 	Courses(ctx context.Context) ([]*model.Course, error)
-	Chpaters(ctx context.Context) ([]*model.Chapter, error)
+	Chapters(ctx context.Context) ([]*model.Chapter, error)
 }
 
 type executableSchema struct {
@@ -237,12 +237,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Categories(childComplexity), true
 
-	case "Query.chpaters":
-		if e.complexity.Query.Chpaters == nil {
+	case "Query.chapters":
+		if e.complexity.Query.Chapters == nil {
 			break
 		}
 
-		return e.complexity.Query.Chpaters(childComplexity), true
+		return e.complexity.Query.Chapters(childComplexity), true
 
 	case "Query.courses":
 		if e.complexity.Query.Courses == nil {
@@ -356,7 +356,7 @@ input NewChapter {
 type Query {
     categories: [Category]
     courses: [Course]
-    chpaters: [Chapter]
+    chapters: [Chapter]
 }
 
 type Mutation {
@@ -1105,7 +1105,7 @@ func (ec *executionContext) _Query_courses(ctx context.Context, field graphql.Co
 	return ec.marshalOCourse2ᚕᚖgithubᚗcomᚋlinielsonᚋfc2ᚑgraphqlᚋgraphᚋmodelᚐCourse(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Query_chpaters(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Query_chapters(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1123,7 +1123,7 @@ func (ec *executionContext) _Query_chpaters(ctx context.Context, field graphql.C
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Chpaters(rctx)
+		return ec.resolvers.Query().Chapters(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2595,7 +2595,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_courses(ctx, field)
 				return res
 			})
-		case "chpaters":
+		case "chapters":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
 				defer func() {
@@ -2603,7 +2603,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_chpaters(ctx, field)
+				res = ec._Query_chapters(ctx, field)
 				return res
 			})
 		case "__type":
